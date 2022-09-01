@@ -36,8 +36,8 @@ function setup() {
   // initialiseer waarden
   xPositie = [100, 200, 150, 250, 300];               // midden van de breedte van het canvas
   yPositie = [100, 200, 300, 200, 300 ];              // midden van de hoogte van het canvas
-  speedX = random(-5, 5);      // random waarde tussen -5 en 5
-  speedY = random(-5, 5);      // 👆
+  speedX = random(-5, 5, 3, -3, 2);      // random waarde tussen -5 en 5
+  speedY = random(-5, 5, 3, -3, 2);      // 👆
 }
 
 /**
@@ -55,8 +55,12 @@ function draw() {
   rect(xPositie, yPositie, BREEDTE, BREEDTE);
 
   // update positie
-  xPositie = xPositie + speedX;
-  yPositie = yPositie + speedY;
+ for (var i = 0; i < xPositie.length; i++) {
+  ellipse(xPositie[i], yPositie[i], 10, 10);
+    xPositie[1] += speedX;
+    yPositie[1] += speedY;
+    
+ }
 
   // stuiter evt. tegen de kanten
   if (xPositie <= 0 || xPositie + BREEDTE >= width) {
