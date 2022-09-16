@@ -1,6 +1,6 @@
- /* Opdracht Objectgeorienteerd programmeren
-    Informatica - Emmauscollege Rotterdam
- */
+/* Opdracht Objectgeorienteerd programmeren
+   Informatica - Emmauscollege Rotterdam
+*/
 
 /* ******************************************************* */
 /* instellingen om foutcontrole van je code beter te maken */
@@ -12,10 +12,7 @@
 /* ********************************************* */
 /* globale variabelen die je gebruikt in je game */
 /* ********************************************* */
-var xPositie;
-var yPositie;
-var speedX;
-var speedY;
+var mensen;
 const BREEDTE = 20;
 
 
@@ -34,11 +31,14 @@ function setup() {
   createCanvas(1280, 720);
 
   // initialiseer waarden
-  xPositie = [100, 200, 150, 250, 300];               // midden van de breedte van het canvas
-  yPositie = [100, 200, 300, 200, 300 ];              // midden van de hoogte van het canvas
-  speedX = random(-5, 5, 3, -3, 2);      // random waarde tussen -5 en 5
-  speedY = random(-5, 5, 3, -3, 2);      // 👆
-}
+  mensen = [{ x: 400, y: 150, speedX: 2, speedY: -2 },
+            { x: 130, y: 30, speedX: -3, speedY: -3 },
+            { x: 104, y: 10, speedX: 5, speedY: 2 },
+            { x: 160, y: 200, speedX: -1, speedY: 5 },
+            { x: 10, y: 100, speedX: 2, speedY: 1 },
+  ]
+};
+
 
 /**
  * draw
@@ -55,12 +55,12 @@ function draw() {
   rect(xPositie, yPositie, BREEDTE, BREEDTE);
 
   // update positie
- for (var i = 0; i < xPositie.length; i++) {
-  ellipse(xPositie[i], yPositie[i], 10, 10);
+  for (var i = 0; i < xPositie.length; i++) {
+    ellipse(xPositie[i], yPositie[i], 10, 10);
     xPositie[1] += speedX;
     yPositie[1] += speedY;
-    
- }
+
+  }
 
   // stuiter evt. tegen de kanten
   if (xPositie <= 0 || xPositie + BREEDTE >= width) {
