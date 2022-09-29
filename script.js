@@ -154,10 +154,10 @@ class Kat extends Actor {
   show() {
     noStroke();
     if (this.isBesmet === true) {
-      fill(255, 140, 0);   // oranje
+      fill(255, 140, 0);   
     }
     else {
-      fill(0, 0, 255);     // blauw
+      fill(0, 0, 255);     
     }
 
     rect(this.x, this.y, this.breedte, this.breedte);
@@ -171,12 +171,12 @@ class Kat extends Actor {
 
 class Dokter extends Mens {
   show() {
-    // teken zoals de klasse Mens dat doet
+
     super.show();
 
-    // en daarna nog een rood kruis
+
     strokeWeight(5);
-    stroke(255, 0, 0);    // rood
+    stroke(0, 255, 0);   
     line(this.x + this.breedte / 2, this.y, this.x + this.breedte / 2, this.y + this.breedte);
     line(this.x, this.y + this.breedte / 2, this.x + this.breedte, this.y + this.breedte / 2);
   }
@@ -186,7 +186,7 @@ class Dokter extends Mens {
 /* ********************************************* */
 /* globale variabelen die je gebruikt in je game */
 /* ********************************************* */
-var actoren = [];        // lege array voor de mens-objecten
+var actoren = [];        
 
 
 
@@ -194,22 +194,15 @@ var actoren = [];        // lege array voor de mens-objecten
 /* setup() en draw() functies / hoofdprogramma   */
 /* ********************************************* */
 
-/**
- * setup
- * de code in deze functie wordt één keer uitgevoerd door
- * de p5 library, zodra het spel geladen is in de browser
- */
+
 function setup() {
-  // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
   createCanvas(1280, 720);
 
   // maak 25 random mensen
   for (var teller = 0; teller < 25; teller++) {
-    // we moeten ze niet te dicht bij de rand tekenen
-    // om geen problemen met stuiteren te krijgen
     var ruimteTotRand = 50;
 
-    // creëer random positie en snelheid
+
     var randomX = random(ruimteTotRand, width - ruimteTotRand);
     var randomY = random(ruimteTotRand, height - ruimteTotRand);
     var randomSpeedX = random(-5, 5);
@@ -304,12 +297,6 @@ function draw() {
             actorB.isBesmet = false;
           }
           else {
-            // check of er een besmetting optreedt
-            // dit moet los gecontroleerd worden
-            // anders wordt ook de besmettelijkheidsteller
-            // van de besmetter weer teruggezet. Dat zou
-            // onlogisch zijn. Twee besmette actoren kunnen elkaar niet
-            // opnieuw besmetten.
             if (actorA.isBesmet && !actorB.isBesmet) {
               actorB.besmet();
             }
