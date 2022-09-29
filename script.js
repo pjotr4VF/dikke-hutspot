@@ -39,29 +39,18 @@ class Actor {
     this.besmettelijkheidsTeller = 0;
 
   }
-  /**
-   * show is een abstracte methode
-   * moet worden overschreven door subklassen
-   */
+
   show() { }
 
-  /**
-   * abstracte methode, moet worden overschreven door subklassen
-   * zet isBesmet op true
-   * zet besmettelijkheidsTeller op juiste startwaarde
-   */
+
   besmet() { }
 
-  /**
-   * update de positie en 'spiegelt' de snelheden
-   * wanneer het object tegen de randen botst
-   */
+
   update() {
-    // update positie
+  
     this.x = this.x - this.speedX;
     this.y = this.y - this.speedY;
 
-    // stuiter tegen randen
     if (this.x <= 0 || this.x + this.breedte >= width) {
       this.speedX = this.speedX * -1;
     }
@@ -84,23 +73,22 @@ class Actor {
     // zet teruggeefwaarde standaard op false
     var overlappend = false;
 
-    if ( // valt linkerbovenhoek binnen randen van 'andereActor'?
+    if ( 
       (this.x >= andereActor.x &&
         this.x <= andereActor.x + andereActor.breedte &&
         this.y >= andereActor.y &&
         this.y <= andereActor.y + andereActor.breedte)
       ||
-      // OF valt rechterbovenhoek binnen randen van 'andereActor'?
       (this.x + this.breedte >= andereActor.x &&
         this.x + this.breedte <= andereActor.x + andereActor.breedte &&
         this.y >= andereActor.y &&
         this.y <= andereActor.y + andereActor.breedte)
-      || // OF de linkeronderhoek?
+      || 
       (this.x >= andereActor.x &&
         this.x <= andereActor.x + andereActor.breedte &&
         this.y + this.breedte >= andereActor.y &&
         this.y + this.breedte <= andereActor.y + andereActor.breedte)
-      || // OF de hoek rechtsonder?
+      || 
       (this.x >= andereActor.x &&
         this.x <= andereActor.x + andereActor.breedte &&
         this.y + this.breedte >= andereActor.y &&
@@ -109,28 +97,26 @@ class Actor {
 
       overlappend = true;
     }
-
-    // stuur de teruggeefwaarde terug
     return overlappend;
   }
 }
 
 class Mens extends Actor {
   constructor(x, y, speedX, speedY) {
-    // roep de constructor van Actor aan
+
     super(x, y, speedX, speedY);
 
-    // geef breedte een correcte waarde
+
     this.breedte = 20;
   }
 
   show() {
     noStroke();
     if (this.isBesmet === true) {
-      fill(255, 0, 0);      // rood
+      fill(255, 0, 0);      
     }
     else {
-      fill(255, 255, 255);  // wit
+      fill(255, 255, 255);  
     }
 
     rect(this.x, this.y, this.breedte, this.breedte);
@@ -144,10 +130,7 @@ class Mens extends Actor {
 
 class Kat extends Actor {
   constructor(x, y, speedX, speedY) {
-    // roep de constructor van Actor aan
     super(x, y, speedX, speedY);
-
-    // geef breedte een correcte waarde
     this.breedte = 10;
   }
 
@@ -198,8 +181,7 @@ var actoren = [];
 function setup() {
   createCanvas(1280, 720);
 
-  // maak 25 random mensen
-  for (var teller = 0; teller < 25; teller++) {
+  for (var teller = 0; teller < 30; teller++) {
     var ruimteTotRand = 50;
 
 
@@ -208,33 +190,27 @@ function setup() {
     var randomSpeedX = random(-5, 5);
     var randomSpeedY = random(-5, 5);
 
-    // maak nieuw mensobject
     var nieuwMens = new Mens(randomX, randomY, randomSpeedX, randomSpeedY);
-
-    // voeg mensobject toe aan array
     actoren.push(nieuwMens);
   }
 
-  // maak 10 random katten
   for (var teller = 0; teller < 10; teller++) {
-    // we moeten ze niet te dicht bij de rand tekenen
-    // om geen problemen met stuiteren te krijgen
+
     var ruimteTotRand = 50;
 
-    // creëer random positie en snelheid
+ 
     var randomX = random(ruimteTotRand, width - ruimteTotRand);
     var randomY = random(ruimteTotRand, height - ruimteTotRand);
     var randomSpeedX = random(-2, 2);
     var randomSpeedY = random(-2, 2);
 
-    // maak nieuw mensobject
+
     var nieuweKat = new Kat(randomX, randomY, randomSpeedX, randomSpeedY);
 
-    // voeg mensobject toe aan array
+  
     actoren.push(nieuweKat);
   }
 
-  // maak 1 dokter (random waarden zijn nog mooier)
   actoren.push(new Dokter(width / 2, height / 2, 3, 5));
 
   actoren[0].isBesmet = true;
@@ -246,24 +222,19 @@ function setup() {
  * uitgevoerd door de p5 library, nadat de setup functie klaar is
  */
 function draw() {
-  // zwarte achtergrond
+
   background(0, 0, 0);
 
   var aantalBesmet = 0;
   var aantalOnbesmet = 0;
-  // ga alle waarden in de arrays af:
   for (var i = 0; i < actoren.length; i++) {
-    // verwijs met 'mens' naar het mens-object die bij deze
-    // iteratie van de loop hoort.
     var actor = actoren[i];
 
-    // teken
+ 
     actor.show();
 
-    // update positie en stuiter eventueel
     actor.update();
 
-    // kijk of actor besmet is en werk de aantallen bij
     if (actor.isBesmet) {
       aantalBesmet = aantalBesmet + 1;
     }
@@ -272,27 +243,20 @@ function draw() {
     }
   }
 
-  // teken de statiestieken
   noStroke();
-  textSize(25);           // niet te klein
-  fill(128, 128, 128);    // grijs
+  textSize(25);           
+  fill(128, 128, 128);    
   text("Besmet: " + aantalBesmet, 1100, 30);
   text("Onbesmet: " + aantalOnbesmet, 1100, 60);
 
-  // controleer of actoren elkaar aanraken
-  // ga alle actoren langs
   for (var i = 0; i < actoren.length; i++) {
     var actorA = actoren[i];
-    // ga met actorA opnieuw alle mensen langs om te checken op overlap, behalve met zichzelf
     for (var j = 0; j < actoren.length; j++) {
       var actorB = actoren[j];
       if (actorA != actorB) {
-        // check overlap
         var actorenOverlappen = actorA.isOverlappend(actorB);
         if (actorenOverlappen) {
           if (actorA instanceof Dokter || actorB instanceof Dokter) {
-            // minimaal één van de mensen is dokter,
-            // dus ze worden / blijven beide gezond
             actorA.isBesmet = false;
             actorB.isBesmet = false;
           }
